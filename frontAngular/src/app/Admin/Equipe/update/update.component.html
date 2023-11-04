@@ -1,0 +1,64 @@
+<div class="container-fluid" id="updateComp">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card-warning w-50 p-3">
+        <div class="card-header card-header">
+          <h3 class="title">Mettre à jour votre Contrat !</h3>
+          <br />
+          <div class="form-container">
+            <form name="equipeForm" [formGroup]="equipeForm" novalidate>
+              <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Nom équipe</mat-label>
+                <input type="text" matInput formControlName="nomEquipe" required [(ngModel)]="ctrct.nomEquipe" >
+               
+                <mat-error
+                  *ngIf="
+                  equipeForm.controls.nomEquipe.touched &&
+                  equipeForm.controls.nomEquipe.invalid
+                  "
+                >
+                  <span
+                    *ngIf="equipeForm.controls.nomEquipe.errors.required"
+                    >Veuillez entrer un nom pour l'équipe</span
+                  >
+                </mat-error>
+              </mat-form-field>
+        
+              <!--Specialite du Contrat-->
+              <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Niveau</mat-label>
+                <mat-select formControlName="niveau" required  [(ngModel)]="ctrct.niveau">
+                  <mat-option *ngFor="let spec of niveaux" [value]="spec.value">
+                    {{ spec.viewValue }}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="
+                    equipeForm.controls.niveau.touched &&
+                    equipeForm.controls.niveau.invalid
+                  "
+                >
+                  <span *ngIf="equipeForm.controls.niveau.errors.required"
+                    >Veuillez choisir une option.</span
+                  >
+                </mat-error>
+              </mat-form-field>
+              <button
+                mat-raised-button
+                color="accent"
+                [disabled]="equipeForm.invalid"
+                (click)="updateEquipe(equipeForm.value)"
+              >
+                Valider
+              </button>
+              <button mat-raised-button [mat-dialog-close] class="log">
+                Close
+              </button>
+            </form>
+            <br /><br /><br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

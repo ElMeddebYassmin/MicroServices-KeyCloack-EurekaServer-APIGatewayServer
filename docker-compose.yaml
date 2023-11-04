@@ -1,0 +1,108 @@
+version: '3'
+services:
+  Eureka:
+    container_name: eureka
+    build: Eureka
+    hostname: serviceregistry
+    ports:
+      - "8761:8761"
+    image: "eureka"
+
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://serviceregistry:8761/eureka/
+
+
+  object:
+    container_name: msobject
+    build: .\msobject
+    ports:
+      - "8760:8082"
+    image: "msobject"
+    restart: unless-stopped
+    depends_on:
+      - Eureka
+      - db-mysql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db-mysql:3307/Object?createDatabaseIfNotExist=true&userSSL=false&max_allowed_packet=15728640
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+
+  Blog:
+    container_name: blog
+    image: "blogms"
+    build: BlogMS
+    ports:
+      - "8085:8085"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
+    depends_on:
+      - Eureka
+
+  Organization:
+    container_name: organisation
+    build: OrganizationMS
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db-mysql:3307/organization?createDatabaseIfNotExist=true&userSSL=false&max_allowed_packet=15728640
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
+
+    image: "organizationms"
+    restart: unless-stopped
+    depends_on:
+      - Eureka
+      - db-mysql
+
+  Event:
+    container_name: EventMSContainer
+    image: "image_ms_docker_event_project"
+    build: .\EventProject
+    ports:
+      - "8040:8040"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka
+    depends_on:
+      - "Eureka"
+
+  Claim:
+    container_name: claim-ms-container
+    build: ClaimMS
+    ports:
+      - "8089:8084"
+    image: "claim-ms"
+    depends_on:
+      - Eureka
+      - db-mysql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db-mysql:3307/dbclaims?createDatabaseIfNotExist=true&userSSL=false&max_allowed_packet=15728640
+
+  Gateway:
+    container_name: gateway
+    build: API_Gateway_Server
+    hostname: gateway
+    ports:
+      - "8090:8090"
+    image: "gateway"
+    depends_on:
+      - Eureka
+      - db-mysql
+    restart: always
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://serviceregistry:8761/eureka/
+      - EUREKA_INSTANCE_LEASERENEWALINTERVALINSECONDS=10
+      - EUREKA_INSTANCE_LEASEEXPIRATIONDURATIONINSECONDS=30
+
+  db-mysql:
+    image: "mysql:5.6"
+    container_name: db-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_TCP_PORT= 3307
+    ports:
+      - "3307:3307"
+    restart: unless-stopped
+
+

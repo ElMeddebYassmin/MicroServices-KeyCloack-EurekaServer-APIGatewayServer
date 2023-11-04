@@ -1,0 +1,119 @@
+<div class="example-container">
+  <br /><br />
+  <h3 class="title">Ajouter Un Nouveau Contrat !</h3>
+  <br />
+  <div class="form-container">
+    <form name="contractForm" [formGroup]="contractForm" novalidate>
+      <!--Date du contrat-->
+      <mat-form-field color="accent" class="form-field" appearance="outline">
+        <mat-label>Date Debut De Contrat</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker1"
+          formControlName="dateDebutContrat"
+          required
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker1"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+        <mat-error
+          *ngIf="
+            contractForm.controls.dateDebutContrat.touched &&
+            contractForm.controls.dateDebutContrat.invalid
+          "
+        >
+          <span *ngIf="contractForm.controls.dateDebutContrat.errors.required"
+            >Veuillez choisir une date.</span
+          >
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field color="accent" class="form-field" appearance="outline">
+        <mat-label>Date Fin De Contrat</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker2"
+          formControlName="dateFinContrat"
+          required
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker2"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker2 color="primary"></mat-datepicker>
+        <mat-error
+          *ngIf="
+            contractForm.controls.dateFinContrat.touched &&
+            contractForm.controls.dateFinContrat.invalid
+          "
+        >
+          <span *ngIf="contractForm.controls.dateFinContrat.errors.required"
+            >Veuillez choisir une date.</span
+          >
+        </mat-error>
+      </mat-form-field>
+
+      <!--Specialite du Contrat-->
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Specialite</mat-label>
+        <mat-select formControlName="specialite" required>
+          <mat-option *ngFor="let spec of specialites" [value]="spec.value">
+            {{ spec.viewValue }}
+          </mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="
+            contractForm.controls.specialite.touched &&
+            contractForm.controls.specialite.invalid
+          "
+        >
+          <span *ngIf="contractForm.controls.specialite.errors.required"
+            >Veuillez choisir une option.</span
+          >
+        </mat-error>
+      </mat-form-field>
+
+      <!--Prix du Contrat-->
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Prix</mat-label>
+        <mat-select formControlName="montantContrat" required>
+          <mat-optgroup
+            *ngFor="let group of prixGroups"
+            [label]="group.name"
+            [disabled]="group.disabled"
+          >
+            <mat-option
+              *ngFor="let pokemon of group.pokemon"
+              [value]="pokemon.value"
+            >
+              {{ pokemon.viewValue }}
+            </mat-option>
+          </mat-optgroup>
+        </mat-select>
+        <mat-error
+          *ngIf="
+            contractForm.controls.montantContrat.touched &&
+            contractForm.controls.montantContrat.invalid
+          "
+        >
+          <span *ngIf="contractForm.controls.montantContrat.errors.required"
+            >Veuillez choisir une option.</span
+          >
+        </mat-error>
+      </mat-form-field>
+      <!-- <button (click)="onError()"></button> -->
+      <button
+        mat-raised-button
+        color="accent"
+        [disabled]="contractForm.invalid"
+        (click)="submit(contractForm.value)"
+      >
+        Valider
+      </button>
+      <button mat-raised-button [mat-dialog-close] class="log">Close</button>
+    </form>
+    <br /><br /><br />
+  </div>
+</div>

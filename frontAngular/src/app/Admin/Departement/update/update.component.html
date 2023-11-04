@@ -1,0 +1,55 @@
+<div class="container-fluid" id="updateComp">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card-warning w-50 p-3">
+        <div class="card-header card-header">
+          <h3 class="title">Mettre à jour votre Departement !</h3>
+          <br />
+          <div class="form-container">
+            <form
+              name="departementForm"
+              [formGroup]="departementForm"
+              novalidate
+            >
+              <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Nom Departement</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  formControlName="nomDepart" 
+                  required
+                  [(ngModel)]="ctrct.nomDepart"
+                />
+
+                <mat-error
+                  *ngIf="
+                    departementForm.controls.nomDepart.touched &&
+                    departementForm.controls.nomDepart.invalid
+                  "
+                >
+                  <span
+                    *ngIf="departementForm.controls.nomDepart.errors.required"
+                    >Veuillez entrer un nom.</span
+                  >
+                </mat-error>
+              </mat-form-field>
+              <!-- <button (click)="onError()"></button> -->
+              <button
+                mat-raised-button
+                color="accent"
+                [disabled]="departementForm.invalid"
+                (click)="updateDepartement(departementForm.value)"
+              >
+                Valider
+              </button>
+              <button mat-raised-button [mat-dialog-close] class="log">
+                Close
+              </button>
+            </form>
+            <br /><br /><br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

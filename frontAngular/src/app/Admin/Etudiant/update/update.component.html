@@ -1,0 +1,86 @@
+<div class="container-fluid" id="updateComp">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card-warning w-50 p-3">
+        <div class="card-header card-header">
+          <h3 class="title">Mettre à jour votre etudiant !</h3>
+          <br />
+          <div class="form-container">
+            <form name="etudiantForm" [formGroup]="etudiantForm" novalidate>
+              <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Prénom étudiant</mat-label>
+                <input type="text" matInput formControlName="prenomE" required [(ngModel)]="ctrct.prenomE" >
+               
+                <mat-error
+                  *ngIf="
+                  etudiantForm.controls.prenomE.touched &&
+                  etudiantForm.controls.prenomE.invalid
+                  "
+                >
+                  <span
+                    *ngIf="etudiantForm.controls.nomE.errors.required"
+                    >Veuillez entrer un prenom pour l'étudiant</span
+                  >
+                </mat-error>
+              </mat-form-field>
+        
+        
+              <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Nom étudiant</mat-label>
+                <input type="text" matInput formControlName="nomE" required [(ngModel)]="ctrct.nomE" >
+               
+                <mat-error
+                  *ngIf="
+                  etudiantForm.controls.nomE.touched &&
+                  etudiantForm.controls.nomE.invalid
+                  "
+                >
+                  <span
+                    *ngIf="etudiantForm.controls.nomE.errors.required"
+                    >Veuillez entrer un nom pour l'étudiant</span
+                  >
+                </mat-error>
+              </mat-form-field>
+        
+           
+        
+              <!--Specialite du Contrat-->
+              <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Option</mat-label>
+                <mat-select formControlName="op" required [(ngModel)]="ctrct.op">
+                  <mat-option *ngFor="let spec of options" [value]="spec.value">
+                    {{ spec.viewValue }}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="
+                    etudiantForm.controls.op.touched &&
+                    etudiantForm.controls.op.invalid
+                  "
+                >
+                  <span *ngIf="etudiantForm.controls.op.errors.required"
+                    >Veuillez choisir une option.</span
+                  >
+                </mat-error>
+              </mat-form-field>
+
+
+              <button
+                mat-raised-button
+                color="accent"
+                [disabled]="etudiantForm.invalid"
+                (click)="updateEtudiant(etudiantForm.value)"
+              >
+                Valider
+              </button>
+              <button mat-raised-button [mat-dialog-close] class="log">
+                Close
+              </button>
+            </form>
+            <br /><br /><br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

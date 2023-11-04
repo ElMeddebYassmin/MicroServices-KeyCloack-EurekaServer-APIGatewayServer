@@ -1,0 +1,9 @@
+{
+    "realm": "Demo-Realm",
+    "auth-server-url": "http://localhost:8180/auth",
+    "ssl-required": "external",
+    "resource": "nodeJs-microservice",
+    "credentials": {
+        "secret": "0c1418cc-dfb9-485b-a410-0e4f7246ceb8"
+    }
+}

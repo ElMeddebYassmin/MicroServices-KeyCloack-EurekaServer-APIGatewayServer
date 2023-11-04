@@ -1,0 +1,35 @@
+<div class="example-container">
+  <br /><br />
+  <h3 class="title">Ajouter Un Nouveau Departement !</h3>
+  <br />
+  <div class="form-container">
+    <form name="departementForm" [formGroup]="departementForm" novalidate>
+      <!--Prix du Contrat-->
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Nom Département</mat-label>
+        <input type="text" matInput formControlName="nomDepart" required />
+        <mat-error
+          *ngIf="
+            departementForm.controls.nomDepart.touched &&
+            departementForm.controls.nomDepart.invalid
+          "
+        >
+          <span *ngIf="departementForm.controls.nomDepart.errors.required"
+            >Veuillez entrer un nom</span
+          >
+        </mat-error>
+      </mat-form-field>
+      <!-- <button (click)="onError()"></button> -->
+      <button
+        mat-raised-button
+        color="accent"
+        [disabled]="departementForm.invalid"
+        (click)="submit(departementForm.value)"
+      >
+        Valider
+      </button>
+      <button mat-raised-button [mat-dialog-close] class="log">Close</button>
+    </form>
+    <br /><br /><br />
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="example-container">
+  <br /><br />
+  <h3 class="title">Ajouter Une Nouvelle Université !</h3>
+  <br />
+  <div class="form-container">
+    <form name="universiteForm" [formGroup]="universiteForm" novalidate>
+      <!--Date du contrat-->
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Nom université</mat-label>
+        <input type="text" matInput formControlName="nomUniv" required  >
+       
+        <mat-error
+          *ngIf="
+            universiteForm.controls.nomUniv.touched &&
+            universiteForm.controls.nomUniv.invalid
+          "
+        >
+          <span
+            *ngIf="universiteForm.controls.nomUniv.errors.required"
+            >Veuillez entrer un nom pour l'universite</span
+          >
+        </mat-error>
+      </mat-form-field>
+    
+
+  
+
+   
+      <!-- <button (click)="onError()"></button> -->
+      <button
+        mat-raised-button
+        color="accent"
+        [disabled]="universiteForm.invalid"
+        (click)="submit(universiteForm.value)"
+      >
+        Valider
+      </button>
+      <button mat-raised-button [mat-dialog-close] class="log">Close</button>
+    </form>
+    <br /><br /><br />
+  </div>
+</div>

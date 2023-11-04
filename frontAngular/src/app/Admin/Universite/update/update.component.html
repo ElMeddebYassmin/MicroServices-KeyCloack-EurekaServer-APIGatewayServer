@@ -1,0 +1,55 @@
+<div class="container-fluid" id="updateComp">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card-warning w-50 p-3">
+        <div class="card-header card-header">
+          <h3 class="title">Mettre à jour votre Universite !</h3>
+          <br />
+          <div class="form-container">
+            <form name="universiteForm" [formGroup]="universiteForm" novalidate>
+              <!--Date du contrat-->
+         
+
+              
+             
+
+              <!--Specialite du Contrat-->
+           
+
+              <!--Prix du Contrat-->
+              <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Nom université</mat-label>
+                <input type="text" matInput formControlName="nomUniv" required  [(ngModel)]="ctrct.nomUniv"/>
+               
+                <mat-error
+                  *ngIf="
+                    universiteForm.controls.nomUniv.touched &&
+                    universiteForm.controls.nomUniv.invalid
+                  "
+                >
+                  <span
+                    *ngIf="universiteForm.controls.nomUniv.errors.required"
+                    >Veuillez entrer un nom pour l'universite</span
+                  >
+                </mat-error>
+              </mat-form-field>
+              <!-- <button (click)="onError()"></button> -->
+              <button
+                mat-raised-button
+                color="accent"
+                [disabled]="universiteForm.invalid"
+                (click)="updateUniversite(universiteForm.value)"
+              >
+                Valider
+              </button>
+              <button mat-raised-button [mat-dialog-close] class="log">
+                Close
+              </button>
+            </form>
+            <br /><br /><br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

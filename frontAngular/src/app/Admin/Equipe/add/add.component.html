@@ -1,0 +1,60 @@
+<div class="example-container">
+  <br /><br />
+  <h3 class="title">Ajouter Une Nouvelle equipe !</h3>
+  <br />
+  <div class="form-container">
+    <form name="equipeForm" [formGroup]="equipeForm" novalidate>
+      <!--Date du contrat-->
+     
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Nom équipe</mat-label>
+        <input type="text" matInput formControlName="nomEquipe" required  >
+       
+        <mat-error
+          *ngIf="
+          equipeForm.controls.nomEquipe.touched &&
+          equipeForm.controls.nomEquipe.invalid
+          "
+        >
+          <span
+            *ngIf="equipeForm.controls.nomEquipe.errors.required"
+            >Veuillez entrer un nom pour l'équipe</span
+          >
+        </mat-error>
+      </mat-form-field>
+
+      <!--Specialite du Contrat-->
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Niveau</mat-label>
+        <mat-select formControlName="niveau" required>
+          <mat-option *ngFor="let spec of niveaux" [value]="spec.value">
+            {{ spec.viewValue }}
+          </mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="
+            equipeForm.controls.niveau.touched &&
+            equipeForm.controls.niveau.invalid
+          "
+        >
+          <span *ngIf="equipeForm.controls.niveau.errors.required"
+            >Veuillez choisir une option.</span
+          >
+        </mat-error>
+      </mat-form-field>
+
+     
+      <!-- <button (click)="onError()"></button> -->
+      <button
+        mat-raised-button
+        color="accent"
+        [disabled]="equipeForm.invalid"
+        (click)="submit(equipeForm.value)"
+      >
+        Valider
+      </button>
+      <button mat-raised-button [mat-dialog-close] class="log">Close</button>
+    </form>
+    <br /><br /><br />
+  </div>
+</div>
